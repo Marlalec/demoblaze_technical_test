@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'net.serenity-bdd.serenity-gradle-plugin' version '5.3.2'
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    serenityVersion = '5.3.2'
+    cucumberVersion = '7.34.2'
+    junitPlatformVersion = '6.0.3'
+    junitLauncherVersion = '1.13.0'
+    logbackVersion = '1.2.10'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+dependencies {
+    implementation "net.serenity-bdd:serenity-core:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-screenplay:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-screenplay-webdriver:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-ensure:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-cucumber:${serenityVersion}"
+
+    implementation "io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}"
+    implementation "org.junit.platform:junit-platform-suite:${junitPlatformVersion}"
+    implementation "org.junit.platform:junit-platform-launcher:${junitLauncherVersion}"
+
+    testRuntimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
+}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "FAILED", "SKIPPED"
+        exceptionFormat "short"
+        showStandardStreams = true
+    }
+
+    finalizedBy aggregate
+}
+
+serenity {
+    generateOutcomes = true
+}
