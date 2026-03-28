@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'eclipse'
+}
+
+defaultTasks 'clean', 'test'
+
+group = 'com.sofka.demoblaze'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+ext {
+    karateVersion = '1.4.1'
+    cucumberVersion = '5.8.4'
+}
+
+dependencies {
+    testImplementation "com.intuit.karate:karate-junit5:${karateVersion}"
+    testImplementation "net.masterthought:cucumber-reporting:${cucumberVersion}"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+}
+
+test {
+    include '**/*Test.class'
+
+    systemProperty "karate.options", System.getProperty("karate.options")
+    systemProperty "karate.env", System.getProperty("karate.env")
+    systemProperty "file.encoding", "UTF-8"
+    systemProperty "karate.output.dir", "target/"
+
+    outputs.upToDateWhen { false }
+    useJUnitPlatform()
+
+    testLogging {
+        showStandardStreams = true
+        events "passed", "skipped", "failed"
+    }
+}
