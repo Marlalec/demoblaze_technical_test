@@ -1,0 +1,64 @@
+Hallazgos y conclusiones del ejercicio
+
+1. Objetivo del ejercicio
+Se automatizaron las pruebas de los servicios Signup y Login de la plataforma Demoblaze con el fin de validar los flujos solicitados para creación y autenticación de usuarios, cubriendo escenarios positivos y negativos.
+
+==================================================
+2. HALLAZGOS
+==================================================
+
+- Se identificó que ambos servicios consumen como datos de entrada los campos username y password.
+
+- El servicio Signup permite la creación exitosa de un usuario nuevo cuando el username no existe previamente en el sistema.
+
+- En el escenario de registro exitoso, el servicio respondió con código HTTP 200 y un cuerpo vacío, lo que indica que la operación fue procesada correctamente aunque no se retorne una estructura JSON de confirmación.
+
+- Cuando se intentó registrar un usuario ya existente, el servicio respondió con un mensaje funcional de error:
+  "This user already exist."
+
+- Para el caso de usuario existente, se validó no solo el mensaje funcional esperado, sino también la estructura del contrato de respuesta, verificando la existencia del campo errorMessage, su tipo de dato y la ausencia de campos adicionales no esperados.
+
+- El servicio Login permitió la autenticación correcta cuando se enviaron credenciales válidas previamente registradas en la plataforma.
+
+- En el escenario de login exitoso, la respuesta del servicio fue un valor no vacío, consistente con el comportamiento esperado de autenticación satisfactoria.
+
+- Cuando se enviaron credenciales inválidas en Login, el servicio respondió con un mensaje funcional de error:
+  "Wrong password."
+
+- Se evidenció que los servicios evaluados no siempre responden bajo una estructura uniforme, ya que algunos flujos retornan cuerpo vacío, otros un string y otros un objeto JSON. Por esta razón, las validaciones se diseñaron con enfoque funcional y de contrato según el comportamiento real de cada caso.
+
+==================================================
+3. CONCLUSIONES
+==================================================
+
+- La automatización implementada permite validar de forma reproducible los escenarios solicitados para los servicios Signup y Login de Demoblaze.
+
+- Karate resultó una herramienta adecuada para este ejercicio, ya que permite construir pruebas API de forma clara, mantenible y con validaciones tanto funcionales como estructurales.
+
+- La separación entre runner, features, configuración y datos de prueba mejora la organización del proyecto y facilita su ejecución y revisión por terceros.
+
+- La inclusión de validaciones de contrato en los escenarios negativos aporta mayor robustez a la solución, ya que no solo se valida el mensaje esperado sino también la forma de la respuesta.
+
+- El uso de datos dinámicos para el registro exitoso reduce el riesgo de colisiones por duplicidad y mejora la estabilidad de la prueba.
+
+- El ejercicio permitió evidenciar una cobertura básica pero suficiente de los flujos principales solicitados: creación de usuario nuevo, intento de creación de usuario existente, login exitoso y login fallido.
+
+- Desde la perspectiva de aseguramiento de calidad, la solución entregada cumple con el objetivo funcional del reto y deja una base clara para extender la cobertura con validaciones adicionales, manejo de datos de prueba y ejecución continua.
+
+==================================================
+4. RECOMENDACIONES
+==================================================
+
+- Incorporar una estrategia más controlada de gestión de datos de prueba para evitar dependencias manuales en los escenarios que requieren usuarios previamente existentes.
+
+- Complementar la automatización con validaciones adicionales sobre tiempos de respuesta, encabezados HTTP y manejo de errores no funcionales.
+
+- Estandarizar, en caso de evolución del servicio, la estructura de las respuestas API para facilitar validaciones de contrato más consistentes.
+
+- Integrar la ejecución de estas pruebas a un pipeline CI/CD para habilitar validación continua en cambios futuros.
+
+==================================================
+5. CIERRE
+==================================================
+
+La solución desarrollada permite evidenciar la automatización de los casos requeridos para los servicios Signup y Login, con una implementación organizada, reproducible y alineada con buenas prácticas de pruebas API.

@@ -1,0 +1,92 @@
+Conclusiones: DemoblazeSerenity
+Descripción:
+Hallazgos de prueba, conclusiones y recomendaciones identificadas durante la ejecución del flujo E2E de compra en Demoblaze usando Serenity BDD.
+
+==================================================
+1. OBJETIVO DEL EJERCICIO
+==================================================
+
+El objetivo del ejercicio fue automatizar y ejecutar una prueba E2E sobre el flujo de compra en Demoblaze, validando las siguientes acciones:
+
+- Agregar dos productos al carrito
+- Visualizar el carrito
+- Completar el formulario de compra
+- Finalizar la compra
+
+==================================================
+2. RESULTADO GENERAL DE LA PRUEBA
+==================================================
+
+La prueba E2E permitió validar de manera satisfactoria el flujo principal de compra en la aplicación.
+
+Durante la ejecución se confirmó que el sitio permite:
+- seleccionar productos
+- agregarlos al carrito
+- visualizar el resumen de compra
+- diligenciar el formulario
+- finalizar la compra mostrando el mensaje de confirmación
+
+==================================================
+3. HALLAZGOS DE PRUEBA IDENTIFICADOS
+==================================================
+
+Durante la ejecución de la prueba se identificaron los siguientes hallazgos funcionales y de comportamiento en la aplicación:
+
+- Al agregar un producto al carrito, la aplicación muestra una alerta con el mensaje:
+  "Product added"
+
+- El flujo de compra finaliza mostrando el mensaje:
+  "Thank you for your purchase!"
+
+- La confirmación de compra presenta información relevante de la transacción, como:
+  - nombre del comprador
+  - número de tarjeta
+  - valor total de la compra
+
+- El valor total mostrado en el carrito coincide con el valor reflejado en el detalle final de la compra.
+
+- La navegación entre el detalle del producto, la página principal y el carrito depende del comportamiento dinámico de la interfaz, por lo que algunas transiciones requieren sincronización adecuada para que los elementos estén disponibles.
+
+==================================================
+4. INCIDENCIAS O COMPORTAMIENTOS RELEVANTES OBSERVADOS
+==================================================
+
+Durante la prueba no se evidenció un defecto funcional crítico que impidiera completar el flujo feliz de compra.
+
+Sin embargo, se observaron los siguientes comportamientos relevantes en la aplicación:
+
+- La confirmación de agregado al carrito depende de una alerta nativa del navegador.
+- Algunos elementos de la interfaz no siempre están disponibles de forma inmediata después de ciertas acciones.
+- El total del carrito puede tardar un momento en mostrarse luego de ingresar a la vista del carrito.
+- La estabilidad del flujo depende de que la aplicación complete correctamente la carga visual de ciertos componentes antes de continuar con la siguiente acción.
+
+Estos puntos no impiden completar el flujo exitoso, pero sí representan consideraciones importantes al momento de validar o automatizar la aplicación.
+
+==================================================
+5. CONCLUSIÓN TÉCNICA
+==================================================
+
+La aplicación Demoblaze permite ejecutar correctamente el flujo principal de compra solicitado en la prueba técnica.
+
+Desde la perspectiva de pruebas, el escenario funcional E2E se comporta de manera adecuada en su ruta feliz. La compra puede completarse y la aplicación retorna los datos esperados de confirmación.
+
+No obstante, la prueba también permitió identificar comportamientos de sincronización y carga dinámica que deben tenerse en cuenta en futuras validaciones automatizadas.
+
+==================================================
+6. RECOMENDACIONES
+==================================================
+
+Con base en los hallazgos obtenidos durante la prueba, se recomienda:
+
+- Considerar mecanismos de confirmación más controlados dentro de la interfaz, en lugar de depender de alertas nativas del navegador.
+- Mejorar la estabilidad en la carga de componentes dinámicos como el total del carrito.
+- Incorporar identificadores más robustos en elementos clave de la interfaz para facilitar su validación.
+- Tener en cuenta sincronización explícita en futuras automatizaciones sobre este flujo.
+
+==================================================
+7. CIERRE
+==================================================
+
+En conclusión, la prueba E2E permitió comprobar que el flujo de compra solicitado funciona correctamente en Demoblaze y que la aplicación soporta la ruta feliz esperada.
+
+Adicionalmente, se identificaron hallazgos de prueba relevantes sobre el comportamiento de la interfaz y la respuesta de la aplicación, los cuales aportan valor para futuras validaciones funcionales y de automatización.
