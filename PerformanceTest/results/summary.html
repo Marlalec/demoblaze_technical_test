@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>k6 Login Test Summary</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; color: #1f2937; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    th, td { border: 1px solid #d1d5db; padding: 10px; text-align: left; vertical-align: top; }
+    th { background: #f3f4f6; }
+  </style>
+</head>
+<body>
+  <h1>SOFKA - Login Load Test Summary</h1>
+  <p><strong>Profile:</strong> load </p>
+  <p><strong>Endpoint:</strong> https://fakestoreapi.com/auth/login</p>
+  <p><strong>Latency target:</strong> p(95) &lt; 1500 ms</p>
+  <p><strong>Error target:</strong> rate &lt; 3.00%</p>
+  <p><strong>Dependency note:</strong> The test uses fakestoreapi.com as an external public dependency. Results can vary due to internet latency, public throttling, or third-party instability.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>Type</th>
+        <th>Contains</th>
+        <th>Values</th>
+        <th>Thresholds</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>business_success_rate</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>passes=0 | fails=3575 | rate=0</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>business_success_rate{scenario:baseline_comparison}</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>rate=0 | passes=0 | fails=101</td>
+        <td>rate&gt;0.97:FAIL</td>
+      </tr>
+      <tr>
+        <td>business_success_rate{scenario:load_target}</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>rate=0 | passes=0 | fails=494</td>
+        <td>rate&gt;0.97:FAIL</td>
+      </tr>
+      <tr>
+        <td>business_success_rate{scenario:soak_stability}</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>rate=0 | passes=0 | fails=1753</td>
+        <td>rate&gt;0.97:FAIL</td>
+      </tr>
+      <tr>
+        <td>checks</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>rate=0.019580419580419582 | passes=210 | fails=10515</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>checks{scenario:baseline_comparison}</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>rate=0.036303630363036306 | passes=11 | fails=292</td>
+        <td>rate&gt;0.97:FAIL</td>
+      </tr>
+      <tr>
+        <td>checks{scenario:load_target}</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>rate=0.02496626180836707 | passes=37 | fails=1445</td>
+        <td>rate&gt;0.97:FAIL</td>
+      </tr>
+      <tr>
+        <td>checks{scenario:soak_stability}</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>rate=0.02205742536603917 | passes=116 | fails=5143</td>
+        <td>rate&gt;0.97:FAIL</td>
+      </tr>
+      <tr>
+        <td>data_received</td>
+        <td>counter</td>
+        <td>data</td>
+        <td>rate=3109.9905215266263 | count=1259646</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>data_sent</td>
+        <td>counter</td>
+        <td>data</td>
+        <td>count=747940 | rate=1846.6190585852096</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>dropped_iterations</td>
+        <td>counter</td>
+        <td>default</td>
+        <td>count=4879 | rate=12.045958749147308</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>dropped_iterations{scenario:baseline_comparison}</td>
+        <td>counter</td>
+        <td>default</td>
+        <td>count=12 | rate=0.02962728120306778</td>
+        <td>count==0:FAIL</td>
+      </tr>
+      <tr>
+        <td>dropped_iterations{scenario:load_target}</td>
+        <td>counter</td>
+        <td>default</td>
+        <td>rate=1.3751996358423961 | count=557</td>
+        <td>count==0:FAIL</td>
+      </tr>
+      <tr>
+        <td>dropped_iterations{scenario:soak_stability}</td>
+        <td>counter</td>
+        <td>default</td>
+        <td>count=1698 | rate=4.192260290234091</td>
+        <td>count==0:FAIL</td>
+      </tr>
+      <tr>
+        <td>http_req_blocked</td>
+        <td>trend</td>
+        <td>time</td>
+        <td>max=305.3679 | p(90)=0 | p(95)=0 | p(99)=204.998978 | avg=8.21206408391609 | min=0 | med=0</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>http_req_connecting</td>
+        <td>trend</td>
+        <td>time</td>
+        <td>med=0 | max=107.5114 | p(90)=0 | p(95)=0 | p(99)=99.80554199999996 | avg=3.9750569230769233 | min=0</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>http_req_duration</td>
+        <td>trend</td>
+        <td>time</td>
+        <td>p(99)=19933.941838 | avg=13327.478641762225 | min=393.2162 | med=19429.0367 | max=20403.6396 | p(90)=19857.15338 | p(95)=19888.15583</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>http_req_duration{scenario:baseline_comparison}</td>
+        <td>trend</td>
+        <td>time</td>
+        <td>med=3205.2898 | max=19884.3331 | p(90)=8143.323 | p(95)=19418.6516 | p(99)=19839.8929 | avg=4658.6977306930685 | min=472.2378</td>
+        <td>p(95)&lt;1500:FAIL</td>
+      </tr>
+      <tr>
+        <td>http_req_duration{scenario:load_target}</td>
+        <td>trend</td>
+        <td>time</td>
+        <td>min=792.5307 | med=19419.7556 | max=20359.5831 | p(90)=19841.81725 | p(95)=19884.221295 | p(99)=19959.524508 | avg=12654.074933805672</td>
+        <td>p(95)&lt;1500:FAIL</td>
+      </tr>
+      <tr>
+        <td>http_req_duration{scenario:soak_stability}</td>
+        <td>trend</td>
+        <td>time</td>
+        <td>p(99)=19934.365624000002 | avg=13726.837801996591 | min=393.2162 | med=19452.2423 | max=20403.6396 | p(90)=19856.39412 | p(95)=19887.08878</td>
+        <td>p(95)&lt;1500:FAIL</td>
+      </tr>
+      <tr>
+        <td>http_req_failed</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>rate=1 | passes=3575 | fails=0</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>http_req_failed{scenario:baseline_comparison}</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>rate=1 | passes=101 | fails=0</td>
+        <td>rate&lt;0.03:FAIL</td>
+      </tr>
+      <tr>
+        <td>http_req_failed{scenario:load_target}</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>rate=1 | passes=494 | fails=0</td>
+        <td>rate&lt;0.03:FAIL</td>
+      </tr>
+      <tr>
+        <td>http_req_failed{scenario:soak_stability}</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>rate=1 | passes=1753 | fails=0</td>
+        <td>rate&lt;0.03:FAIL</td>
+      </tr>
+      <tr>
+        <td>http_req_receiving</td>
+        <td>trend</td>
+        <td>time</td>
+        <td>p(90)=0.9536399999999997 | p(95)=1.436459999999988 | p(99)=4.4240819999999905 | avg=0.2860862657342657 | min=0 | med=0 | max=16.6664</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>http_req_sending</td>
+        <td>trend</td>
+        <td>time</td>
+        <td>max=1.6219 | p(90)=0.39618 | p(95)=0.51293 | p(99)=0.6840979999999983 | avg=0.11969116083916086 | min=0 | med=0</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>http_req_tls_handshaking</td>
+        <td>trend</td>
+        <td>time</td>
+        <td>med=0 | max=124.0785 | p(90)=0 | p(95)=0 | p(99)=105.262542 | avg=4.200462349650349 | min=0</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>http_req_waiting</td>
+        <td>trend</td>
+        <td>time</td>
+        <td>med=19428.4429 | max=20402.025 | p(90)=19856.95046 | p(95)=19887.84359 | p(99)=19933.832248 | avg=13327.07286433565 | min=393.2162</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>http_reqs</td>
+        <td>counter</td>
+        <td>default</td>
+        <td>count=3575 | rate=8.826460858413943</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>http_success_rate</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>rate=0 | passes=0 | fails=3575</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>http_success_rate{scenario:baseline_comparison}</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>rate=0 | passes=0 | fails=101</td>
+        <td>rate&gt;0.97:FAIL</td>
+      </tr>
+      <tr>
+        <td>http_success_rate{scenario:load_target}</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>rate=0 | passes=0 | fails=494</td>
+        <td>rate&gt;0.97:FAIL</td>
+      </tr>
+      <tr>
+        <td>http_success_rate{scenario:soak_stability}</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>fails=1753 | rate=0 | passes=0</td>
+        <td>rate&gt;0.97:FAIL</td>
+      </tr>
+      <tr>
+        <td>iteration_duration</td>
+        <td>trend</td>
+        <td>time</td>
+        <td>p(95)=19895.33143 | p(99)=20002.633886 | avg=13344.8180383776 | min=393.7214 | med=19430.901 | max=20454.9853 | p(90)=19864.22612</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>iterations</td>
+        <td>counter</td>
+        <td>default</td>
+        <td>count=3575 | rate=8.826460858413943</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>login_duration</td>
+        <td>trend</td>
+        <td>time</td>
+        <td>avg=13327.478641762225 | min=393.2162 | med=19429.0367 | max=20403.6396 | p(90)=19857.15338 | p(95)=19888.15583 | p(99)=19933.941838</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>login_failures</td>
+        <td>counter</td>
+        <td>default</td>
+        <td>count=3575 | rate=8.826460858413943</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>slo_violation_rate</td>
+        <td>rate</td>
+        <td>default</td>
+        <td>passes=3575 | fails=0 | rate=1</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>vus</td>
+        <td>gauge</td>
+        <td>default</td>
+        <td>max=150 | value=150 | min=5</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>vus_max</td>
+        <td>gauge</td>
+        <td>default</td>
+        <td>value=150 | min=30 | max=150</td>
+        <td></td>
+      </tr></tbody>
+  </table>
+</body>
+</html>

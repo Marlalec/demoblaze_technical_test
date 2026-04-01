@@ -1,0 +1,41 @@
+metric_name,metric_type,contains,values,thresholds
+business_success_rate,rate,default,rate=0 | passes=0 | fails=3575,
+business_success_rate{scenario:baseline_comparison},rate,default,rate=0 | passes=0 | fails=101,rate>0.97:FAIL
+business_success_rate{scenario:load_target},rate,default,rate=0 | passes=0 | fails=494,rate>0.97:FAIL
+business_success_rate{scenario:soak_stability},rate,default,rate=0 | passes=0 | fails=1753,rate>0.97:FAIL
+checks,rate,default,rate=0.019580419580419582 | passes=210 | fails=10515,
+checks{scenario:baseline_comparison},rate,default,rate=0.036303630363036306 | passes=11 | fails=292,rate>0.97:FAIL
+checks{scenario:load_target},rate,default,rate=0.02496626180836707 | passes=37 | fails=1445,rate>0.97:FAIL
+checks{scenario:soak_stability},rate,default,rate=0.02205742536603917 | passes=116 | fails=5143,rate>0.97:FAIL
+data_received,counter,data,count=1259646 | rate=3109.9905215266263,
+data_sent,counter,data,count=747940 | rate=1846.6190585852096,
+dropped_iterations,counter,default,count=4879 | rate=12.045958749147308,
+dropped_iterations{scenario:baseline_comparison},counter,default,count=12 | rate=0.02962728120306778,count==0:FAIL
+dropped_iterations{scenario:load_target},counter,default,count=557 | rate=1.3751996358423961,count==0:FAIL
+dropped_iterations{scenario:soak_stability},counter,default,count=1698 | rate=4.192260290234091,count==0:FAIL
+http_req_blocked,trend,time,min=0 | med=0 | max=305.3679 | p(90)=0 | p(95)=0 | p(99)=204.998978 | avg=8.21206408391609,
+http_req_connecting,trend,time,avg=3.9750569230769233 | min=0 | med=0 | max=107.5114 | p(90)=0 | p(95)=0 | p(99)=99.80554199999996,
+http_req_duration,trend,time,p(99)=19933.941838 | avg=13327.478641762225 | min=393.2162 | med=19429.0367 | max=20403.6396 | p(90)=19857.15338 | p(95)=19888.15583,
+http_req_duration{scenario:baseline_comparison},trend,time,avg=4658.6977306930685 | min=472.2378 | med=3205.2898 | max=19884.3331 | p(90)=8143.323 | p(95)=19418.6516 | p(99)=19839.8929,p(95)<1500:FAIL
+http_req_duration{scenario:load_target},trend,time,p(90)=19841.81725 | p(95)=19884.221295 | p(99)=19959.524508 | avg=12654.074933805672 | min=792.5307 | med=19419.7556 | max=20359.5831,p(95)<1500:FAIL
+http_req_duration{scenario:soak_stability},trend,time,p(99)=19934.365624000002 | avg=13726.837801996591 | min=393.2162 | med=19452.2423 | max=20403.6396 | p(90)=19856.39412 | p(95)=19887.08878,p(95)<1500:FAIL
+http_req_failed,rate,default,rate=1 | passes=3575 | fails=0,
+http_req_failed{scenario:baseline_comparison},rate,default,fails=0 | rate=1 | passes=101,rate<0.03:FAIL
+http_req_failed{scenario:load_target},rate,default,fails=0 | rate=1 | passes=494,rate<0.03:FAIL
+http_req_failed{scenario:soak_stability},rate,default,rate=1 | passes=1753 | fails=0,rate<0.03:FAIL
+http_req_receiving,trend,time,max=16.6664 | p(90)=0.9536399999999997 | p(95)=1.436459999999988 | p(99)=4.4240819999999905 | avg=0.2860862657342657 | min=0 | med=0,
+http_req_sending,trend,time,avg=0.11969116083916086 | min=0 | med=0 | max=1.6219 | p(90)=0.39618 | p(95)=0.51293 | p(99)=0.6840979999999983,
+http_req_tls_handshaking,trend,time,p(90)=0 | p(95)=0 | p(99)=105.262542 | avg=4.200462349650349 | min=0 | med=0 | max=124.0785,
+http_req_waiting,trend,time,p(99)=19933.832248 | avg=13327.07286433565 | min=393.2162 | med=19428.4429 | max=20402.025 | p(90)=19856.95046 | p(95)=19887.84359,
+http_reqs,counter,default,count=3575 | rate=8.826460858413943,
+http_success_rate,rate,default,rate=0 | passes=0 | fails=3575,
+http_success_rate{scenario:baseline_comparison},rate,default,passes=0 | fails=101 | rate=0,rate>0.97:FAIL
+http_success_rate{scenario:load_target},rate,default,rate=0 | passes=0 | fails=494,rate>0.97:FAIL
+http_success_rate{scenario:soak_stability},rate,default,rate=0 | passes=0 | fails=1753,rate>0.97:FAIL
+iteration_duration,trend,time,med=19430.901 | max=20454.9853 | p(90)=19864.22612 | p(95)=19895.33143 | p(99)=20002.633886 | avg=13344.8180383776 | min=393.7214,
+iterations,counter,default,count=3575 | rate=8.826460858413943,
+login_duration,trend,time,p(95)=19888.15583 | p(99)=19933.941838 | avg=13327.478641762225 | min=393.2162 | med=19429.0367 | max=20403.6396 | p(90)=19857.15338,
+login_failures,counter,default,count=3575 | rate=8.826460858413943,
+slo_violation_rate,rate,default,rate=1 | passes=3575 | fails=0,
+vus,gauge,default,value=150 | min=5 | max=150,
+vus_max,gauge,default,value=150 | min=30 | max=150,

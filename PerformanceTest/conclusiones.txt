@@ -4,18 +4,20 @@ CONCLUSIONES - PRUEBA DE PERFORMANCE LOGIN
 1. RESUMEN GENERAL DE LA EJECUCIÓN
 ==================================================
 
-Se ejecutó una prueba de carga sobre el servicio de login con una tasa objetivo de 20 iteraciones por segundo durante un periodo aproximado de 30 segundos.
+Se ejecutó una prueba de performance sobre el servicio de login utilizando el endpoint https://fakestoreapi.com/auth/login. El reporte consolidado evidencia que la ejecución estuvo afectada por una dependencia pública externa, lo cual impactó directamente la estabilidad general de la prueba.
 
 Resultados generales:
 
-- Total de requests: 601
-- Throughput alcanzado: ~19.54 requests/segundo
-- Usuarios virtuales máximos: 20
-- Tasa de error: 0%
-- Tasa de éxito HTTP: 100%
-- Tasa de éxito funcional: 100%
+- Total de requests: 3575
+- Throughput alcanzado: ~8.83 requests/segundo
+- Usuarios virtuales máximos: 150
+- Tasa de error HTTP: 100%
+- Tasa de éxito HTTP: 0%
+- Tasa de éxito funcional: 0%
+- Total de login_failures: 3575
+- Total de dropped_iterations: 4879
 
-La prueba se ejecutó de forma estable sin interrupciones ni fallos.
+La prueba no se ejecutó de forma estable, ya que se evidenció una degradación severa del servicio y fallos generalizados durante toda la corrida.
 
 ==================================================
 2. ANÁLISIS DE TIEMPOS DE RESPUESTA
@@ -23,56 +25,61 @@ La prueba se ejecutó de forma estable sin interrupciones ni fallos.
 
 De acuerdo con el reporte:
 
-- Tiempo promedio (avg): ~492 ms
-- Percentil 90 (p90): ~514 ms
-- Percentil 95 (p95): ~536 ms
-- Percentil 99 (p99): ~697 ms
-- Tiempo máximo: ~873 ms
+- Tiempo promedio (avg): ~13327 ms
+- Percentil 90 (p90): ~19857 ms
+- Percentil 95 (p95): ~19888 ms
+- Percentil 99 (p99): ~19934 ms
+- Tiempo máximo: ~20404 ms
 
 Análisis:
 
-- El 95% de las peticiones se completan por debajo de 536 ms
-- El tiempo máximo registrado se mantiene por debajo de 1 segundo
-- No se evidencian picos críticos ni degradación significativa del servicio
+- El 95% de las peticiones se completaron por debajo de ~19888 ms, valor muy superior al umbral objetivo de 1500 ms.
+- El tiempo máximo superó los 20 segundos, lo que evidencia una degradación crítica del servicio.
+- Incluso en el escenario baseline_comparison, el p95 fue de ~19419 ms, lo que indica que la inestabilidad estuvo presente desde la línea base y no únicamente en escenarios de mayor exigencia.
+- La métrica http_req_waiting concentró la mayor parte del tiempo total de respuesta, con un promedio de ~13327 ms y un p95 de ~19888 ms, lo que sugiere que el mayor retraso ocurrió esperando respuesta del servicio o de la infraestructura intermedia.
 
 Conclusión:
 
-El servicio cumple con el criterio definido de tiempo de respuesta (< 1.5 segundos), mostrando un comportamiento estable bajo carga.
+El servicio no cumple con el criterio definido de tiempo de respuesta (< 1.5 segundos). El comportamiento observado evidencia una degradación severa desde el escenario base y una alta latencia sostenida durante toda la ejecución.
 
 ==================================================
 3. ANÁLISIS DE THROUGHPUT
 ==================================================
 
 - Throughput esperado: 20 TPS
-- Throughput alcanzado: ~19.54 TPS
+- Throughput alcanzado: ~8.83 TPS
 
 Análisis:
 
-- El sistema logró sostener una tasa cercana al objetivo definido
-- No se observaron caídas abruptas en el número de peticiones por segundo
-- La variación es mínima y esperada por condiciones de ejecución
+- El sistema no logró sostener la tasa objetivo definida para la prueba.
+- El throughput real quedó significativamente por debajo de lo esperado.
+- Se registraron 4879 dropped_iterations, lo que indica que la herramienta no pudo iniciar o sostener todas las iteraciones planeadas bajo las condiciones del entorno.
+- En el escenario load_target se registraron 557 iteraciones descartadas, lo que confirma que ni siquiera el escenario objetivo pudo mantenerse de manera estable.
 
 Conclusión:
 
-El sistema es capaz de soportar la carga objetivo definida para el escenario de prueba.
+El sistema no fue capaz de soportar la carga objetivo definida para el escenario de prueba. El throughput alcanzado fue insuficiente y estuvo afectado por fallos de disponibilidad y por la incapacidad del entorno para sostener la tasa configurada.
 
 ==================================================
 4. ANÁLISIS DE ERRORES
 ==================================================
 
-- http_req_failed: 0%
-- checks: 100%
-- business_success_rate: 100%
+- http_req_failed: 100%
+- checks: ~1.96%
+- business_success_rate: 0%
+- http_success_rate: 0%
+- slo_violation_rate: 100%
 
 Análisis:
 
-- No se presentaron errores técnicos (HTTP)
-- Todas las respuestas cumplieron con las validaciones funcionales (token presente)
-- No se evidencian fallos de integridad o disponibilidad
+- Todas las solicitudes ejecutadas fallaron desde la perspectiva HTTP.
+- Ninguna respuesta fue considerada exitosa a nivel funcional, ya que no se obtuvo éxito de negocio en el login.
+- La tasa de checks exitosa fue muy baja (~1.96%), lo que confirma que la mayoría de las validaciones no se cumplieron.
+- La métrica slo_violation_rate fue de 1, lo que significa que el total de las peticiones incumplió el objetivo de nivel de servicio definido.
 
 Conclusión:
 
-El servicio es estable y confiable bajo las condiciones de carga evaluadas.
+El servicio no fue estable ni confiable bajo las condiciones evaluadas. La tasa de error superó ampliamente el límite aceptable del 3% y no se logró cumplimiento funcional en las respuestas del login.
 
 ==================================================
 5. COMPORTAMIENTO DEL SISTEMA
@@ -80,23 +87,24 @@ El servicio es estable y confiable bajo las condiciones de carga evaluadas.
 
 Observaciones relevantes:
 
-- El sistema mantuvo tiempos de respuesta consistentes durante toda la ejecución
-- No se evidenció degradación progresiva del rendimiento
-- La infraestructura respondió de manera eficiente ante la carga aplicada
-- Las métricas de red (sending, receiving, waiting) se mantuvieron estables
+- El comportamiento del sistema fue inestable durante toda la ejecución.
+- La degradación estuvo presente desde el escenario base, por lo que no puede atribuirse únicamente al incremento de carga.
+- Las métricas de sending, receiving y connecting fueron relativamente bajas frente al tiempo total, mientras que waiting concentró la mayor parte de la latencia.
+- El propio reporte documenta que fakestoreapi.com se utilizó como una dependencia pública externa, indicando que los resultados pueden variar por latencia de internet, throttling público o inestabilidad de terceros.
+- Esto sugiere que los resultados de la prueba no reflejan únicamente el comportamiento del login, sino también la disponibilidad y estabilidad del entorno externo utilizado.
 
 Conclusión:
 
-El sistema presenta un comportamiento estable y predecible bajo carga constante.
+El sistema no presentó un comportamiento estable ni predecible bajo la carga aplicada. Adicionalmente, la dependencia de un entorno externo público afectó la confiabilidad de la medición y debe ser considerada como un riesgo relevante del ejercicio.
 
 ==================================================
 6. CONCLUSIÓN FINAL
 ==================================================
 
-El servicio de login evaluado cumple con los criterios de aceptación definidos para la prueba:
+El servicio de login evaluado no cumple con los criterios de aceptación definidos para la prueba:
 
-- ✔ Tiempo de respuesta menor a 1.5 segundos
-- ✔ Tasa de error menor al 3%
-- ✔ Soporte de al menos 20 TPS
+- X Tiempo de respuesta menor a 1.5 segundos
+- X Tasa de error menor al 3%
+- X Soporte de al menos 20 TPS
 
-En base a los resultados obtenidos, se concluye que el sistema se encuentra en condiciones adecuadas para operar bajo el nivel de carga evaluado, sin evidenciar problemas de rendimiento, estabilidad o disponibilidad.
+En base a los resultados obtenidos, se concluye que el sistema no se encuentra en condiciones adecuadas para operar bajo el nivel de carga evaluado. La ejecución evidenció problemas severos de rendimiento, disponibilidad y estabilidad. Adicionalmente, el uso de fakestoreapi.com como dependencia pública externa introduce un sesgo importante en la prueba, por lo que los resultados deben interpretarse considerando la inestabilidad del entorno y no únicamente como una medida del comportamiento funcional del servicio de login.
